@@ -67,9 +67,23 @@ module.exports = {
         }
        
     },
-    //Seção de Contas
-    async cart(req, res) {
-
+    async whenOpen(req, res) {
+        var d = new Date();
+        function convertTZ(date, tzString) {
+            return new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {timeZone: tzString}));   
+        }
+        const date = convertTZ(d, "America/Sao_Paulo")
+        console.log(date.getDay())
+        const day = date.getDay()
+        if(day == 0 || day == 5 || day == 6) {
+            return res.json({ "opensIn": "Abre terça-feira às 13:00" })
+        }
+        if(day == 2 || day == 4){
+            return res.json({ "opensIn": "Aberto" })
+        }
+        if(day == 3 || day == 1) {
+            return res.json({ "opensIn": "Abre amanhã às 13:00" })
+        }
     },
 
     async products(req, res) {
@@ -81,7 +95,7 @@ module.exports = {
         const product = await Product.create(req.body)
         return res.json(product)
     },
-
+    //Seção de Contas
     async allProfiles(req, res) {
         if(req.query.key == process.env.HASH){
         const profile = await Profile.find()

@@ -6,6 +6,9 @@ const Controller = require('./controllers/Controller')
 //Frete
 routes.get("/shipping", Controller.shipping )
 
+//Quando abre
+routes.get("/whenOpen", Controller.whenOpen)
+
 //Produtos
 routes.get("/products", Controller.products)
 routes.post("/products", Controller.newProduct)
